@@ -1,0 +1,29 @@
+<html>
+	<head> 
+		<title> User Preferences </title>
+		<link rel="stylesheet" type="text/css" href="user-prefs.css"/>
+	</head>
+	<body>
+		<h1> Info of your Home and Appliances </h1>
+		<p> By filling in the form below and giving us accurate data we can simulate your devices creating a schedule to save energy etc </p>
+		<div id="form-holder">
+			<form id="user-preferences">
+				<input class="checkbox" type="checkbox" name="fridge"> Fridge  <input class = "wattage-input" id="fridgePower" type= "text" name="wattage" value="2000"> watts<br>
+				<input class="checkbox" type="checkbox" name="oven"> Oven  <input class = "wattage-input" type= "text" name="wattage" value="2000"> watts<br>
+				<input class="checkbox" type="checkbox" name="washer"> Washer  <input class = "wattage-input" type= "text" name="wattage" value="2000"> watts<br>
+				<input class="checkbox" type="checkbox" name="dryer"> Dryer  <input class = "wattage-input" type= "text" name="wattage" value="2000"> watts<br>
+				<input class="checkbox" type="checkbox" name="toaster"> Toaster  <input class = "wattage-input" type= "text" name="wattage" value="2000"> watts<br>
+				<input class="checkbox" type="checkbox" name="microwave"> Microwave  <input class = "wattage-input" type= "text" name="wattage" value="2000"> watts<br>
+				<input class="checkbox" type="checkbox" name="fridge"> Fridge  <input class = "wattage-input"type= "text" name="wattage" value="2000">watts <br>
+				<input class="checkbox" type="checkbox" name="fridge"> Fridge  <input class = "wattage-input" type= "text" name="wattage" value="2000"> watts<br>
+				
+				<script type="text/javascript">
+					var fridgeWatts = document.getElementById("fridgePower").value;
+					var frdige = new Appliance("fridge", fridgeWatts);
+				</script>
+				
+				<button type="button" >Submit </button>
+			</form>
+		</div>
+	</body>
+</html>
