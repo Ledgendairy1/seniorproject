@@ -1,0 +1,17 @@
+html{
+	margin: 0px;
+	padding: 0px;
+	background-color: black;
+}
+body{
+	color: yellow;
+}
+#checkbox{
+	
+}
+#form-holder{
+	margin-left: 20px;
+}
+.wattage-input{
+	text-align: center;
+}
