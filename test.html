@@ -1,0 +1,75 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<input type="button" id="run-simulation" value="Run"/>
+		<script type="text/javascript" src="js/appliance-list.js"></script>
+		<script type="text/javascript" src="js/ApplianceObject.js"></script>
+		<script type="text/javascript" src="js/groupObject.js"></script>
+		<script type="text/javascript" src="js/ScheduleObject.js"></script>
+		<script type="text/javascript">
+			var groups = [
+				new Group('Upstairs', {wattage: 4000, water: 100}),
+				new Group('Downstairs', {wattage: 4000, water: 1000})
+			];
+			var homeSchedule = { // when the user is home... if their not home then their asleep
+					m:[{from:60*60*8, to:60*60*10}, {from:60*60*18, to:60*60*21}, {from:60*60*21, to:60*60*8, quiet: false}],
+					t:[{from:60*60*8, to:60*60*10}, {from:60*60*18, to:60*60*21}, {from:60*60*21, to:60*60*8, quiet: true}],
+					w:[{from:60*60*8, to:60*60*10}, {from:60*60*18, to:60*60*21}, {from:60*60*21, to:60*60*8, quiet: true}],
+					th:[{from:60*60*8, to:60*60*10}, {from:60*60*18, to:60*60*21}, {from:60*60*21, to:60*60*8, quiet: true}],
+					f:[{from:60*60*8, to:60*60*10}, {from:60*60*18, to:60*60*21}, {from:60*60*21, to:60*60*8, quiet: true}],
+					s:[{from:60*60*11, to:60*60*21}, {from:60*60*21, to:60*60*11, quiet: true}],
+					su:[{from:60*60*11, to:60*60*21}, {from:60*60*21, to:60*60*11, quiet: true}]
+			};
+			/*
+				Start at
+				End At
+				
+				Start by
+				End by
+				
+				From
+				To
+				Quiet = is it quiet hours
+			*/
+			var selectedAppliances = [
+				new Appliance('Dishwasher', 'Dishwasher', {wattage: 1200, water: 23}, 60*60*1.2, {
+					m:[{from:60*60*0, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					t:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					w:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					th:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					f:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					s:[],
+					su:[]
+				}, 0, 2, [1], 1),
+				new Appliance('Shower', 'Shower', {wattage: 2999}, 60*60*0.5, {
+					m:[{from:60*60*.5, to:60*60*2.5}],
+					t:[{from:60*60*8, to:60*60*8.5}],
+					w:[{from:60*60*8, to:60*60*8.5}],
+					th:[{from:60*60*8, to:60*60*8.5}],
+					f:[{from:60*60*8, to:60*60*8.5}],
+					s:[{from:60*60*12, to:60*60*12.5}],
+					su:[{from:60*60*12, to:60*60*12.5}]
+				}, 1, 5, null, 1),
+				new Appliance('Upstairs Lights', 'Lights', {wattage: 1200}, null, homeSchedule, 1, null, null, 1),
+				new Appliance('Oven', 'Oven', {wattage: 2540}, 60*60*.5, {
+					m:[{from:60*60*0, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					t:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					w:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					th:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					f:[{from:60*60*12.5, to:60*60*15.5},{from:60*60*19.5, to:60*60*21.5}],
+					s:[],
+					su:[]
+				}, 0, 3, [1], 1)
+			];
+		</script>
+		<script type="text/javascript" src="js/simulator.js"></script>
+		<div id = "simulator-console">
+			<textarea id = "console-textbox" cols = "100" rows = "20" readonly = "readonly"></textarea>
+		</div>
+		<div id = "simulator-event">
+			<ol id = "event-list">
+			</ol>
+		</div>
+	</body>
+</html>
