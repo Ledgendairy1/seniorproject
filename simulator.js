@@ -1,7 +1,7 @@
 // use this function to output strings to a console on the webpage
 consoleMessage = function(str){
 	message = str + "\n";
-	document.getElementById("console-textbox").value += message;
+	document.getElementById("console-textbox").value = message;
 	document.getElementById("console-textbox").scrollTop = document.getElementById("console-textbox").scrollHeight;
 }
 // this will take simulator events and append them to a list which will output on the webpage for the user
@@ -10,6 +10,10 @@ eventMessage = function(str){
 	var listItem = document.createElement("li");
 	listItem.appendChild(document.createTextNode(str));
 	list.appendChild(listItem);
+}
+// clear the text in the console-textbox
+clearText = function(){
+	document.getElementById("console-textbox").value = "";
 }
 
 function Scheduler(apps){
@@ -64,7 +68,7 @@ function Scheduler(apps){
             && sched.applianceCanStart(apps[i]) // check if the appliances schedule works with the current date
            	&& apps[i].timesRun < apps[i].timesToRun // check if it has been run the correct number of times
         	){
-                sched.runInGroupPriority(apps[i]);
+                sched.runInGroupPriority(apps[i], elapsedTime);
             }
             // check for turning appliance off
             if(apps[i].on
@@ -73,7 +77,7 @@ function Scheduler(apps){
                 apps[i].timesRun += 1;
                 console.log("Stopping appliance "+apps[i].name);
 				consoleMessage("Stopping appliance " + apps[i].name);
-				eventMessage("Appliance: " + apps[i].name + " stopped at: " + sched.formatTime(elapsedTime));
+				eventMessage(apps[i].name + " stopped at: " + sched.formatTime(elapsedTime));
                 apps[i].currentRuntime = 0;
             }
             // update appliances that are on
@@ -93,10 +97,11 @@ function Scheduler(apps){
     	}
     	return count;
     }
-    sched.runInGroupPriority = function(appliance){
+    sched.runInGroupPriority = function(appliance, elapsedTime){
     	if(sched.countRunningAppliancesInGroup(appliance.group) == 0){
     		console.log("Running appliance "+appliance.name);
 			consoleMessage("Running appliance "+appliance.name);
+			eventMessage(appliance.name + " started at: "+sched.formatTime(elapsedTime)); // throws error if using sched.formatTime(elapsedTime);
     		appliance.on = true;
     		return;
     	}
