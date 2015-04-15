@@ -5,9 +5,12 @@ consoleMessage = function(str){
 	document.getElementById("console-textbox").scrollTop = document.getElementById("console-textbox").scrollHeight;
 }
 // this will take simulator events and append them to a list which will output on the webpage for the user
-eventMessage = function(str){
-	var list = document.getElementById("event-list");
-	var listItem = document.createElement("li");
+eventMessage = function(str, day){
+	var list;
+	var listItem;
+	
+	list = document.getElementById(dayOfTheWeek+"-event");
+	listItem = document.createElement("li");
 	listItem.appendChild(document.createTextNode(str));
 	list.appendChild(listItem);
 }
@@ -77,14 +80,14 @@ function Scheduler(apps){
                 apps[i].timesRun += 1;
                 console.log("Stopping appliance "+apps[i].name);
 				consoleMessage("Stopping appliance " + apps[i].name);
-				eventMessage(apps[i].name + " stopped at: " + sched.formatTime(elapsedTime));
+				eventMessage(apps[i].name + " stopped at: " + sched.formatTime(elapsedTime), dayOfTheWeek);
                 apps[i].currentRuntime = 0;
             }
             // update appliances that are on
             if(apps[i].on){
                 apps[i].currentRuntime++;
-                console.log("Time remaining for "+apps[i].name+": "+(apps[i].cycleDuration-apps[i].currentRuntime)/60);
-				consoleMessage("Time remaining for " + apps[i].name+": "+(apps[i].cycleDuration-apps[i].currentRuntime)/60);
+                console.log("Time remaining for "+apps[i].name+": "+Math.floor((apps[i].cycleDuration-apps[i].currentRuntime)/60) +" minutes");
+				consoleMessage("Time remaining for " + apps[i].name+": "+Math.floor((apps[i].cycleDuration-apps[i].currentRuntime)/60)+ " minutes");
             }
         }
     }
@@ -101,7 +104,7 @@ function Scheduler(apps){
     	if(sched.countRunningAppliancesInGroup(appliance.group) == 0){
     		console.log("Running appliance "+appliance.name);
 			consoleMessage("Running appliance "+appliance.name);
-			eventMessage(appliance.name + " started at: "+sched.formatTime(elapsedTime)); // throws error if using sched.formatTime(elapsedTime);
+			eventMessage(appliance.name + " started at: "+sched.formatTime(elapsedTime), dayOfTheWeek); // throws error if using sched.formatTime(elapsedTime);
     		appliance.on = true;
     		return;
     	}
@@ -118,6 +121,8 @@ function Scheduler(apps){
         
         console.log("Group "+appliance.group+" total wattage: "+totalEnergy);
 		consoleMessage("Group "+appliance.group+" total wattage: "+totalEnergy);
+		eventMessage("Group "+appliance.group+" total wattage: "+totalEnergy, dayOfTheWeek);
+		
         if(groups[appliance.group].energyLimit.wattage < totalEnergy){ // the energy has reached its limit
             for(var i = 0; i<apps.length; i++){ // check each appliances priority in the group
                 if(appliance.group === apps[i].group && apps[i].on){
@@ -133,8 +138,8 @@ function Scheduler(apps){
 					console.log("Running appliance "+appliance.name);
 					consoleMessage("Interrupting appliance "+apps[lowestPriorityId].name);
 					consoleMessage("Running appliance "+appliance.name);
-					eventMessage("Interrupting appliance "+apps[lowestPriorityId].name);
-					eventMessage("Running appliance "+appliance.name);
+					eventMessage("Interrupting appliance "+apps[lowestPriorityId].name, dayOfTheWeek);
+					eventMessage("Running appliance "+appliance.name, dayOfTheWeek);
 					apps[lowestPriorityId].on = false;
 				}
             }
@@ -170,7 +175,7 @@ function Scheduler(apps){
     sched.isQuietHours = function(){
         for(var i = 0; i<homeSchedule[dayOfTheWeek].length; i++){
             if(homeSchedule[dayOfTheWeek][i].hasOwnProperty('quiet') && homeSchedule[dayOfTheWeek][i].quiet == true){
-                if(homeSchedule[dayOfTheWeek][i].from <= time && homeSchedule[dayOfTheWeek][i].to >= time){
+                if(homeSchedule[dayOfTheWeek][i].from <= sched.time && homeSchedule[dayOfTheWeek][i].to >= sched.time){
                     return true;
                 }
             }
@@ -192,8 +197,8 @@ function startSimulation(){
             s.Run(seconds);
             seconds++;
             if(seconds > 86400){
-            	for(var i = 0; i<apps.length; i++){
-            		apps[i].timesRun = 0; // reset the number of times it has run that day
+            	for(var i = 0; i<selectedAppliances.length; i++){
+            		selectedAppliances[i].timesRun = 0; // reset the number of times it has run that day
             	}
                 seconds = 1;
                 days++;
