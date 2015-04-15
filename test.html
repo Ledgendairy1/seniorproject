@@ -1,6 +1,16 @@
 <html>
 	<head>
-
+	<style>
+		.appliance-started-list-item{
+			color: green;
+		}
+		.appliance-stopped-list-item{
+			color: red;
+		}
+		.general-notification-list-item{
+			color: blue;
+		}
+	</style>
 	</head>
 	<body>
 		<input type="button" id="run-simulation" value="Run"/>
@@ -75,7 +85,7 @@
 		</script>
 		<script type="text/javascript" src="js/simulator.js"></script>
 		<div id = "simulator-console">
-			<textarea id = "console-textbox" cols = "100" rows = "20" readonly = "readonly"></textarea>
+			<textarea id = "console-textbox" cols = "100" rows = "5" readonly = "readonly"></textarea>
 		</div>
 		<div class = "event-container">
 			<ol class = "event-list" id = "su-event"> <b> Sunday Events </b>
