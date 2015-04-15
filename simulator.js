@@ -4,22 +4,31 @@ consoleMessage = function(str){
 	document.getElementById("console-textbox").value = message;
 	document.getElementById("console-textbox").scrollTop = document.getElementById("console-textbox").scrollHeight;
 }
+
 // this will take simulator events and append them to a list which will output on the webpage for the user
 eventMessage = function(str, day){
 	var list;
 	var listItem;
-	
 	list = document.getElementById(dayOfTheWeek+"-event");
 	listItem = document.createElement("li");
+	
+	// check the incoming string so it can be given the correct html class name
+	if(str.indexOf("started") > -1){
+		listItem.setAttribute("class", "appliance-started-list-item");
+	}else if(str.indexOf("stopped") > -1){
+		listItem.setAttribute("class", "appliance-stopped-list-item");
+	}else{
+		listItem.setAttribute("class", "general-notification-list-item");
+	}
 	listItem.appendChild(document.createTextNode(str));
 	list.appendChild(listItem);
 }
 // clear the text in the console-textbox
-clearText = function(){
+clearTextbox = function(){
 	document.getElementById("console-textbox").value = "";
 }
-
 function Scheduler(apps){
+	var consoleMessageQueue = [];
     var sched = this;
     sched.time;
     sched.formatTime = function(time){
@@ -54,10 +63,12 @@ function Scheduler(apps){
         }
     }
     sched.Run = function(elapsedTime){ // in seconds //everything in this function happens each tick
+		var consoleString = "";
         sched.time = elapsedTime;
+		
        // console.log("Running at time: "+sched.formatTime(sched.time)+" hours on day "+dayOfTheWeek);
        console.log("Time: "+sched.formatTime(elapsedTime));
-	   consoleMessage("Time: "+sched.formatTime(elapsedTime));
+	   //consoleMessage("Time: "+sched.formatTime(elapsedTime));
         /*
             check for
                 interrupts
@@ -79,7 +90,7 @@ function Scheduler(apps){
                 apps[i].on = false;
                 apps[i].timesRun += 1;
                 console.log("Stopping appliance "+apps[i].name);
-				consoleMessage("Stopping appliance " + apps[i].name);
+				consoleMessage("Time: "+sched.formatTime(elapsedTime)+ " -> Stopping appliance " + apps[i].name);
 				eventMessage(apps[i].name + " stopped at: " + sched.formatTime(elapsedTime), dayOfTheWeek);
                 apps[i].currentRuntime = 0;
             }
@@ -87,9 +98,11 @@ function Scheduler(apps){
             if(apps[i].on){
                 apps[i].currentRuntime++;
                 console.log("Time remaining for "+apps[i].name+": "+Math.floor((apps[i].cycleDuration-apps[i].currentRuntime)/60) +" minutes");
-				consoleMessage("Time remaining for " + apps[i].name+": "+Math.floor((apps[i].cycleDuration-apps[i].currentRuntime)/60)+ " minutes");
-            }
+				consoleString += "Time: "+sched.formatTime(elapsedTime)+ " -> Time remaining for " + apps[i].name+": "+Math.floor((apps[i].cycleDuration-apps[i].currentRuntime)/60)+ " minutes"+"\n";
+		    }
+			
         }
+		consoleMessage(consoleString);
     }
     sched.countRunningAppliancesInGroup = function(group){
     	var count = 0;
@@ -103,7 +116,7 @@ function Scheduler(apps){
     sched.runInGroupPriority = function(appliance, elapsedTime){
     	if(sched.countRunningAppliancesInGroup(appliance.group) == 0){
     		console.log("Running appliance "+appliance.name);
-			consoleMessage("Running appliance "+appliance.name);
+			consoleMessage("Time: "+sched.formatTime(elapsedTime)+ " -> Running appliance "+appliance.name);
 			eventMessage(appliance.name + " started at: "+sched.formatTime(elapsedTime), dayOfTheWeek); // throws error if using sched.formatTime(elapsedTime);
     		appliance.on = true;
     		return;
@@ -120,7 +133,7 @@ function Scheduler(apps){
         totalEnergy += appliance.energyUsage.wattage;
         
         console.log("Group "+appliance.group+" total wattage: "+totalEnergy);
-		consoleMessage("Group "+appliance.group+" total wattage: "+totalEnergy);
+		consoleMessage("Time: "+sched.formatTime(elapsedTime) + " -> Group "+appliance.group+" total wattage: "+totalEnergy);
 		eventMessage("Group "+appliance.group+" total wattage: "+totalEnergy, dayOfTheWeek);
 		
         if(groups[appliance.group].energyLimit.wattage < totalEnergy){ // the energy has reached its limit
@@ -136,8 +149,8 @@ function Scheduler(apps){
 					appliance.on = true;
 					console.log("Interrupting appliance "+apps[lowestPriorityId].name);
 					console.log("Running appliance "+appliance.name);
-					consoleMessage("Interrupting appliance "+apps[lowestPriorityId].name);
-					consoleMessage("Running appliance "+appliance.name);
+					consoleMessage("Time: "+sched.formatTime(elapsedTime) + " -> Interrupting appliance "+apps[lowestPriorityId].name);
+					consoleMessage("Time: "+sched.formatTime(elapsedTime) + " -> Running appliance "+appliance.name);
 					eventMessage("Interrupting appliance "+apps[lowestPriorityId].name, dayOfTheWeek);
 					eventMessage("Running appliance "+appliance.name, dayOfTheWeek);
 					apps[lowestPriorityId].on = false;
@@ -145,7 +158,7 @@ function Scheduler(apps){
             }
         }else{
         	console.log("Running appliance "+appliance.name);
-			consoleMessage("Running appliance "+appliance.name);
+			consoleMessage("Time: "+sched.formatTime(elapsedTime) + " -> Running appliance "+appliance.name);
 			eventMessage("Running appliance "+appliance.name);
     		appliance.on = true;
         }             
