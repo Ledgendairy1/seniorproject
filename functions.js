@@ -156,7 +156,7 @@ function clearApplianceDescForm(){
 	document.getElementById("appliance-type").innerHTML = "";
 	document.getElementById("appliance-name").value = "";
 	document.getElementById("appliance-wattage").value = 0;
-	document.getElementById("appliance-priority").value = 0;
+	document.getElementById("appliance-runPriority").value = 0;
 	
 	document.getElementById("appliance-description").style.display = "none";
 }
@@ -173,8 +173,8 @@ function printSelectedAppliances(){
 	
 	// print the list
 	for(var i = 0; i<selectedApplianceList.length; i++){
-		listItem = document.createElement("li");
 		
+		listItem = document.createElement("li");
 		listItem.innerHTML = selectedApplianceList[i].name;
 		listItem.setAttribute("appliance-id", i);
 		listItem.setAttribute("id", "selected-"+i);
@@ -234,16 +234,16 @@ function addAppliance(){
 	var wattage = document.getElementById("appliance-wattage").value;
 	var cycleDuration = document.getElementById("appliance-duration").value;
 	var cyclesPerDay = document.getElementById("appliance-cyclesPerDay").value;
-	var groupNumber = document.getElementById("appliance-groupNumber").value;
-	var priority = document.getElementById("appliance-priority").value;
+	var group = document.getElementById("appliance-group").value;
+	var runPriority = document.getElementById("appliance-runPriority").value;
 	
 	var newAppliance = new Appliance({
 							name: name, 
 							type: type, 
 							energyUsage: +wattage, 
 							cycleDuration: +cycleDuration,  
-							group: +groupNumber, 
-							runPriority: +priority, 
+							group: +group, 
+							runrunPriority: +runPriority, 
 							cyclesPerDay: +cyclesPerDay
 						});
 	
@@ -273,7 +273,7 @@ function addAppliance(){
 */
 function openApplianceDesc(elem)
 {
-	var name = "", type, wattage = 0, cycleDuration = 0, cyclesPerDay = 0, groupNumber = 0, priority = 0;
+	var name = "", type, wattage = 0, cycleDuration = 0, cyclesPerDay = 0, group = 0, runPriority = 0;
 	// get the parent element to check for the available appliances or selected appliances
 	var parent = elem.parentNode;
 	
@@ -289,8 +289,8 @@ function openApplianceDesc(elem)
 		wattage = availableApplianceList[appId].energyUsage;
 		cycleDuration = availableApplianceList[appId].cycleDuration;
 		cyclesPerDay = availableApplianceList[appId].cyclesPerDay;
-		groupNumber = availableApplianceList[appId].groupNumber;
-		priority = availableApplianceList[appId].priority;
+		group = availableApplianceList[appId].group;
+		runPriority = availableApplianceList[appId].runrunPriority;
 		
 		if(availableApplianceList[appId].energyUsage !== undefined){
 			wattage = availableApplianceList[appId].energyUsage;
@@ -301,11 +301,11 @@ function openApplianceDesc(elem)
 		if(availableApplianceList[appId].cyclesPerDay !== undefined){
 			cyclesPerDay = availableApplianceList[appId].cyclesPerDay;
 		}
-		if(availableApplianceList[appId].groupNumber !== undefined){
-			groupNumber = availableApplianceList[appId].groupNumber;
+		if(availableApplianceList[appId].group !== undefined){
+			group = availableApplianceList[appId].group;
 		}
-		if(availableApplianceList[appId].priority !== undefined){
-			priority = availableApplianceList[appId].priority;
+		if(availableApplianceList[appId].runPriority !== undefined){
+			runPriority = availableApplianceList[appId].runrunPriority;
 		}
 		// make sure the selected appliance hidden input is set to -1
 		document.getElementById("selected-appliance-id").value = -1;
@@ -322,8 +322,8 @@ function openApplianceDesc(elem)
 		wattage = availableApplianceList[appId].energyUsage;
 		cycleDuration = availableApplianceList[appId].cycleDuration;
 		cyclesPerDay = availableApplianceList[appId].cyclesPerDay;
-		groupNumber = availableApplianceList[appId].groupNumber;
-		priority = selectedApplianceList[appId].priority;
+		group = availableApplianceList[appId].group;
+		runPriority = selectedApplianceList[appId].runrunPriority;
 		if(selectedApplianceList[appId].energyUsage !== undefined){
 			wattage = selectedApplianceList[appId].energyUsage;
 		}
@@ -343,16 +343,16 @@ function openApplianceDesc(elem)
 	document.getElementById("appliance-wattage").value = wattage;
 	document.getElementById("appliance-duration").value = cycleDuration;
 	document.getElementById("appliance-cyclesPerDay").value = cyclesPerDay;
-	document.getElementById("appliance-groupNumber").value = groupNumber;
-	document.getElementById("appliance-priority").value = priority;
+	document.getElementById("appliance-group").value = group;
+	document.getElementById("appliance-runPriority").value = runPriority;
 	
 	console.log(type);
 	console.log(name);
 	console.log(wattage);
 	console.log(cycleDuration);
 	console.log(cyclesPerDay);
-	console.log(groupNumber);
-	console.log(priority);
+	console.log(group);
+	console.log(runPriority);
 }
 
 /*
