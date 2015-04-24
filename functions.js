@@ -41,7 +41,7 @@ function openGroupDesc(elem){
 	document.getElementById("group-description").style.display = "block";
 	
 	// check if there is an element that has been selected
-	if(elem !== undefined){
+	if(typeof elem !== "undefined"){
 		groupId = elem.getAttribute("group-id");
 		name = groupList[groupId].name;
 		wattage = groupList[groupId].energyLimit.wattage;
@@ -156,6 +156,10 @@ function clearApplianceDescForm(){
 	document.getElementById("appliance-type").innerHTML = "";
 	document.getElementById("appliance-name").value = "";
 	document.getElementById("appliance-wattage").value = 0;
+	document.getElementById("appliance-duration").value = 0;
+	document.getElementById("appliance-cyclesPerDay").value = 0;
+	document.getElementById("appliance-group").value = 0;
+	document.getElementById("appliance-runSchedule").value = null;
 	document.getElementById("appliance-runPriority").value = 0;
 	
 	document.getElementById("appliance-description").style.display = "none";
@@ -190,7 +194,7 @@ function printSelectedAppliances(){
 	Saves lists to local storage
 */
 function saveLists(){
-	if(typeof Storage !== undefined){
+	if(typeof Storage !== "undefined"){
 		console.log("Saving appliance list: " + selectedApplianceList);
 		localStorage.selectedApplianceList = JSON.stringify(selectedApplianceList);
 		localStorage.groupList = JSON.stringify(groupList);
@@ -234,6 +238,7 @@ function addAppliance(){
 	var wattage = document.getElementById("appliance-wattage").value;
 	var cycleDuration = document.getElementById("appliance-duration").value;
 	var cyclesPerDay = document.getElementById("appliance-cyclesPerDay").value;
+	var group = document.getElementById("appliance-runSchedule").value;
 	var group = document.getElementById("appliance-group").value;
 	var runPriority = document.getElementById("appliance-runPriority").value;
 	
@@ -243,7 +248,8 @@ function addAppliance(){
 							energyUsage: +wattage, 
 							cycleDuration: +cycleDuration,  
 							group: +group, 
-							runrunPriority: +runPriority, 
+							runSchedule: null,
+							runPriority: +runPriority, 
 							cyclesPerDay: +cyclesPerDay
 						});
 	
@@ -273,7 +279,7 @@ function addAppliance(){
 */
 function openApplianceDesc(elem)
 {
-	var name = "", type, wattage = 0, cycleDuration = 0, cyclesPerDay = 0, group = 0, runPriority = 0;
+	var name = "", type, wattage = 0, cycleDuration = 0, cyclesPerDay = 0, runSchedule = null, group = 1, runPriority = 0;
 	// get the parent element to check for the available appliances or selected appliances
 	var parent = elem.parentNode;
 	
@@ -287,25 +293,29 @@ function openApplianceDesc(elem)
 		type = availableApplianceList[appId].type;
 		name = availableApplianceList[appId].type+" "+typeCount(type);
 		wattage = availableApplianceList[appId].energyUsage;
-		cycleDuration = availableApplianceList[appId].cycleDuration;
-		cyclesPerDay = availableApplianceList[appId].cyclesPerDay;
-		group = availableApplianceList[appId].group;
-		runPriority = availableApplianceList[appId].runrunPriority;
+		cycleDuration = 0;
+		cyclesPerDay = 0;
+		runSchedule = null;
+		group = 1;
+		runPriority = availableApplianceList[appId].priority;
 		
-		if(availableApplianceList[appId].energyUsage !== undefined){
+		if(typeof availableApplianceList[appId].energyUsage !== "undefined"){
 			wattage = availableApplianceList[appId].energyUsage;
 		}
-		if(availableApplianceList[appId].cycleDuration !== undefined){
+		if(typeof availableApplianceList[appId].cycleDuration !== "undefined"){
 			cycleDuration = availableApplianceList[appId].cycleDuration;
 		}
-		if(availableApplianceList[appId].cyclesPerDay !== undefined){
+		if(typeof availableApplianceList[appId].cyclesPerDay !== "undefined"){
 			cyclesPerDay = availableApplianceList[appId].cyclesPerDay;
 		}
-		if(availableApplianceList[appId].group !== undefined){
+		if(typeof availableApplianceList[appId].runSchedule !== "undefined"){
+			runSchedule = availableApplianceList[appId].cyclesPerDay;
+		}
+		if(typeof availableApplianceList[appId].group !== "undefined"){
 			group = availableApplianceList[appId].group;
 		}
-		if(availableApplianceList[appId].runPriority !== undefined){
-			runPriority = availableApplianceList[appId].runrunPriority;
+		if(typeof availableApplianceList[appId].runPriority !== "undefined"){
+			runPriority = availableApplianceList[appId].runPriority;
 		}
 		// make sure the selected appliance hidden input is set to -1
 		document.getElementById("selected-appliance-id").value = -1;
@@ -319,12 +329,12 @@ function openApplianceDesc(elem)
 		appId = elem.getAttribute("appliance-id");
 		type = selectedApplianceList[appId].type;
 		name = selectedApplianceList[appId].name;
-		wattage = availableApplianceList[appId].energyUsage;
-		cycleDuration = availableApplianceList[appId].cycleDuration;
-		cyclesPerDay = availableApplianceList[appId].cyclesPerDay;
-		group = availableApplianceList[appId].group;
-		runPriority = selectedApplianceList[appId].runrunPriority;
-		if(selectedApplianceList[appId].energyUsage !== undefined){
+		wattage = selectedApplianceList[appId].energyUsage;
+		cycleDuration = selectedApplianceList[appId].cycleDuration;
+		cyclesPerDay = selectedApplianceList[appId].cyclesPerDay;
+		group = selectedApplianceList[appId].group;
+		runPriority = selectedApplianceList[appId].runPriority;
+		if(typeof selectedApplianceList[appId].energyUsage !== "undefined"){
 			wattage = selectedApplianceList[appId].energyUsage;
 		}
 		
@@ -344,12 +354,14 @@ function openApplianceDesc(elem)
 	document.getElementById("appliance-duration").value = cycleDuration;
 	document.getElementById("appliance-cyclesPerDay").value = cyclesPerDay;
 	document.getElementById("appliance-group").value = group;
+	document.getElementById("appliance-runSchedule").value = runSchedule;
 	document.getElementById("appliance-runPriority").value = runPriority;
 	
 	console.log(type);
 	console.log(name);
 	console.log(wattage);
 	console.log(cycleDuration);
+	console.log(runSchedule);
 	console.log(cyclesPerDay);
 	console.log(group);
 	console.log(runPriority);
@@ -434,7 +446,7 @@ function homeBuilderInit(){
 		Load local storage
 	*/
 	
-	if(typeof localStorage.selectedApplianceList !== undefined){
+	if(typeof localStorage.selectedApplianceList !== "undefined"){
 		selectedApplianceList = JSON.parse(localStorage.selectedApplianceList);
 		groupList = JSON.parse(localStorage.groupList);
 		
@@ -463,7 +475,7 @@ function initSimulator(){
 		Load local storage
 	*/
 	
-	if(typeof localStorage.selectedApplianceList !== undefined && typeof localStorage.groupList !== undefined){
+	if(typeof localStorage.selectedApplianceList !== "undefined" && typeof localStorage.groupList !== "undefined"){
 		selectedApplianceList = JSON.parse(localStorage.selectedApplianceList);
 		groupList = JSON.parse(localStorage.groupList);
 		
