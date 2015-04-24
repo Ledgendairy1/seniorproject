@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+	</head>
+	<body>
+		<div id="left-column">
+			<div id="goto-simulation" class="pointer"><div id="goto-simulation-border">RUN SIMULATION</div></div>
+			<div class="left-column-header">APPLIANCES <span id="clear-appliances" class="pointer">clear</span></div>
+			<ol class="pointer" id="selected-appliances"></ol>
+			<div class="left-column-header">GROUPS <span id="clear-groups" class="pointer">clear</span></div>
+			<ol class="pointer" id="groups"></ol>
+		</div>
+		<div id="right-column">
+			<div class="section-content">
+				<h2>Energy Cost</h2>
+				<div id="energy-cost-description">
+					<label>Electricity Cost (per kilowatt-hour)</label>
+						<input type="text" id="electric-cost" value="0.12" class="price"/>
+				</div>
+			</div>
+			<div class="section">
+				<h1 class="section-header">Groups</h1>
+				<input id="create-group" type="button" value="Create Group"/>
+				<div id="group-description">
+					<input id="group-id" type="hidden" value="-1"/>
+					<label>Name:</label>
+						<input type="text" id="group-name" value=""/>
+					<label>Wattage Limit:</label>
+						<input type="text" id="group-wattage-limit" value="0"/>
+					<input id="add-group" type="button" value="Add Group"/>
+					<input id="remove-group" type="button" value="Remove Group"/>
+				</div>
+			</div>
+			<div class="section" id="appliance-description">
+				<h1 class="section-header">Appliance Description</h1>
+				<img id="large-appliance-image"/>
+				<input id="selected-appliance-id" type="hidden" value="-1" />
+				<input id="appliance-id" type="hidden" value="-1" />
+				<div id="appliance-type"></div>
+				<label>Name:</label>
+					<input type="text" id="appliance-name"/>
+				<label>Watts:</label>
+					<input type="text" id="appliance-wattage"/>
+				<label>Cycle Duration:</label>
+					<input type="text" id="appliance-duration"/>
+				<label>Cycles Per Day:</label>
+					<input type="text" id="appliance-cyclesPerDay"/>
+				<label>Group Number:</label>
+					<input type="text" id="appliance-groupNumber"/>
+				<label>Priority:</label>
+					<input type="text" id="appliance-priority" />
+				<input type="button" id="add-appliance" value="Add Appliance" />
+				<input type="button" id="remove-appliance" value="Remove Appliance" />
+			</div>
+			<div class="section">
+				<h1 class="section-header">Available Appliances</h1>
+				<ul class="pointer" id="available-appliances"></ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/fx.js"></script>
+		<script type="text/javascript" src="js/appliance-list.js"></script>
+		<script type="text/javascript" src="js/groupObject.js"></script>
+		<script type="text/javascript" src="js/functions.js"></script>
+		<script type="text/javascript" src="js/appliance.class.js"></script>
+		<script type="text/javascript">
+			homeBuilderInit(); // initialize home builder
+		</script>
+	</body>
+</html>
