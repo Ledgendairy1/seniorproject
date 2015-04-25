@@ -238,7 +238,7 @@ function addAppliance(){
 	var wattage = document.getElementById("appliance-wattage").value;
 	var cycleDuration = document.getElementById("appliance-duration").value;
 	var cyclesPerDay = document.getElementById("appliance-cyclesPerDay").value;
-	var group = document.getElementById("appliance-runSchedule").value;
+	var runSchedule = document.getElementById("appliance-runSchedule").value;
 	var group = document.getElementById("appliance-group").value;
 	var runPriority = document.getElementById("appliance-runPriority").value;
 	
@@ -248,7 +248,7 @@ function addAppliance(){
 							energyUsage: +wattage, 
 							cycleDuration: +cycleDuration,  
 							group: +group, 
-							runSchedule: null,
+							runSchedule: runSchedule,
 							runPriority: +runPriority, 
 							cyclesPerDay: +cyclesPerDay
 						});
@@ -309,7 +309,7 @@ function openApplianceDesc(elem)
 			cyclesPerDay = availableApplianceList[appId].cyclesPerDay;
 		}
 		if(typeof availableApplianceList[appId].runSchedule !== "undefined"){
-			runSchedule = availableApplianceList[appId].cyclesPerDay;
+			runSchedule = availableApplianceList[appId].runSchedule;
 		}
 		if(typeof availableApplianceList[appId].group !== "undefined"){
 			group = availableApplianceList[appId].group;
@@ -334,8 +334,24 @@ function openApplianceDesc(elem)
 		cyclesPerDay = selectedApplianceList[appId].cyclesPerDay;
 		group = selectedApplianceList[appId].group;
 		runPriority = selectedApplianceList[appId].runPriority;
+		
 		if(typeof selectedApplianceList[appId].energyUsage !== "undefined"){
 			wattage = selectedApplianceList[appId].energyUsage;
+		}
+		if(typeof selectedApplianceList[appId].cycleDuration !== "undefined"){
+			cycleDuration = selectedApplianceList[appId].cycleDuration;
+		}
+		if(typeof selectedApplianceList[appId].cyclesPerDay !== "undefined"){
+			cyclesPerDay = selectedApplianceList[appId].cyclesPerDay;
+		}
+		if(typeof selectedApplianceList[appId].group !== "undefined"){
+			group = selectedApplianceList[appId].group;
+		}
+		if(typeof selectedApplianceList[appId].runPriority !== "undefined"){
+			runPriority = selectedApplianceList[appId].runPriority;
+		}
+		if(typeof selectedApplianceList[appId].runSchedule !== "undefined"){
+			runSchedule = selectedApplianceList[appId].runSchedule;
 		}
 		
 		// make sure the selected appliance hidden input is set to -1
