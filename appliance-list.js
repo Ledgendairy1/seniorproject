@@ -2,7 +2,7 @@ availableApplianceList = [
 	{
 		type: 'Light Bulb',
 		name: 'Light Bulb',
-		energyUsage: 60,
+		energyUsage: 50,
 		cycleDuration: null,
 		runSchedule: 
 		{
@@ -19,16 +19,16 @@ availableApplianceList = [
 	},
 	{
 		type: 'Refrigerator',
-		energyUsage: 615,
-		cycleDuration: null,
+		energyUsage: 180,
+		cycleDuration: 1440,
 		runSchedule: null,
 		priority: 5,
-		cyclesPerDay: null
+		cyclesPerDay: 1
 	},
 	{
 		type: 'Microwave',
-		energyUsage: 1050,
-		cycleDuration: 3,
+		energyUsage: 1100,
+		cycleDuration: 4,
 		runSchedule: 
 		{
 			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
@@ -44,8 +44,8 @@ availableApplianceList = [
 	},
 	{
 		type: 'Television',
-		energyUsage: 140,
-		cycleDuration: 300,
+		energyUsage: 75,
+		cycleDuration: 30,
 		runSchedule: 
 		{
 			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
@@ -57,12 +57,12 @@ availableApplianceList = [
 			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
 		},
 		priority: 2,
-		cyclesPerDay: 6
+		cyclesPerDay: 5
 	},
 	{
 		type: 'Ceiling fan',
 		energyUsage: 75,
-		cycleDuration: null,
+		cycleDuration: 30,
 		runSchedule: 
 		{
 			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
@@ -78,7 +78,7 @@ availableApplianceList = [
 	},
 	{
 		type: 'Clothes Dryer',
-		energyUsage: 3600,
+		energyUsage: 3200,
 		cycleDuration: 60,
 		runSchedule: 
 		{
@@ -91,29 +91,12 @@ availableApplianceList = [
 			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
 		},
 		priority: 2,
-		cyclesPerDay: 3
+		cyclesPerDay: 1
 	},
 	{
 		type: 'Desktop Computer',
-		energyUsage: 200,
-		cycleDuration: 300,
-		runSchedule: 
-		{
-			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
-			TUESDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
-			WEDNESDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
-			THURSDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
-			FRIDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
-			SATURDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}],
-			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
-		},
-		priority: 3,
-		cyclesPerDay: 5
-	},
-	{
-		type: 'Dish Washer',
-		energyUsage: 1450,
-		cycleDuration: 120,
+		energyUsage: 150,
+		cycleDuration: 45,
 		runSchedule: 
 		{
 			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
@@ -125,7 +108,24 @@ availableApplianceList = [
 			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
 		},
 		priority: 2,
-		cyclesPerDay: 3
+		cyclesPerDay: 5
+	},
+	{
+		type: 'Dish Washer',
+		energyUsage: 1800,
+		cycleDuration: 60,
+		runSchedule: 
+		{
+			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
+			TUESDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
+			WEDNESDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
+			THURSDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
+			FRIDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: true}],
+			SATURDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}],
+			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
+		},
+		priority: 2,
+		cyclesPerDay: 1
 	},
 	{
 		type: 'Electric Mower',
@@ -159,7 +159,7 @@ availableApplianceList = [
 			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
 		},
 		priority: 3,
-		cyclesPerDay: 2
+		cyclesPerDay: 1
 	},
 	{
 		type: 'Air Conditioner',
@@ -261,7 +261,7 @@ availableApplianceList = [
 			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
 		},
 		priority: 1,
-		cyclesPerDay: 3
+		cyclesPerDay: 1
 	},
 	{
 		type: 'Coffee Machine',
@@ -294,7 +294,7 @@ availableApplianceList = [
 			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
 		},
 		priority: 1,
-		cyclesPerDay: null
+		cyclesPerDay: 1
 	},
 	{
 		type: 'Portable Heater',
