@@ -3,7 +3,7 @@ availableApplianceList = [
 		type: 'Light Bulb',
 		name: 'Light Bulb',
 		energyUsage: 50,
-		cycleDuration: null,
+		cycleDuration: Infinity,
 		runSchedule: 
 		{
 			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
@@ -15,13 +15,13 @@ availableApplianceList = [
 			SUNDAY:[{from:60*11, to:60*21}, {from:60*21, to:60*11, quiet: true}]
 		},
 		priority: 2,
-		cyclesPerDay: null
+		cyclesPerDay: Infinity
 	},
 	{
 		type: 'Refrigerator',
 		energyUsage: 180,
 		cycleDuration: 1440,
-		runSchedule: null,
+		runSchedule: Infinity,
 		priority: 5,
 		cyclesPerDay: 1
 	},
@@ -299,7 +299,7 @@ availableApplianceList = [
 	{
 		type: 'Portable Heater',
 		energyUsage: 1560,
-		cycleDuration: null,
+		cycleDuration: Infinity,
 		runSchedule: 
 		{
 			MONDAY:[{from:60*8, to:60*10}, {from:60*18, to:60*21}, {from:60*21, to:60*8, quiet: false}],
