@@ -47,9 +47,6 @@
 		sim.updateDate = function(){ // updates the number of minutes and the day if need be
 			sim.time++; // increment the time
 			sim.runTime++;
-			if(sim.runTime >= sim.simDuration){
-				sim.stop();
-			}
 			if(sim.time >= 24*60){
 				sim.time = 0;
 				sim.runDays++;
@@ -89,10 +86,13 @@
 						sim.day = 'MONDAY';
 						break;
 				}
-				if(!(sim.runDays%7)){ // if we have run for a week
+				if(!(sim.runDays%7) || sim.runTime >= sim.simDuration){ // if we have run for a week
 					sim.week++;
 					sim.weeklyEnergyArray.push(sim.energyWeek);
 					sim.energyWeek = 0;
+				}
+				if(sim.runTime >= sim.simDuration){
+					sim.stop();
 				}
 			}
 		}
