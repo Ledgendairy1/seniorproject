@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="header">
+				<ul>
+					<li id="logo">IHS</li>
+					<li>Setup</li>
+					<li>Results</li>
+					<li id="export">Export</li>
+				</ul>
+		</div>
+		<div id="page-center">
+			<div id="energy-graph-container" class="section">
+				<h1>Energy Trends</h1>
+				<hr/>
+				<div id="energy-graph"></div>
+			</div>
+			<div id="trend-events" class="section">
+				<h1>Smart Home Events</h1>
+			</div>
+		</div>
+		<script src="http://d3js.org/d3.v3.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+		<script type="text/javascript" src="appliance.class.js"></script>
+		<script type="text/javascript" src="group.class.js"></script>
+		<script type="text/javascript" src="simulator.class.js"></script>
+		<script type="text/javascript" src="testAppliances.js"></script>
+		<script type="text/javascript">
+			var sim = new Simulator({
+				homeSchedule: homeSchedule,
+				appliances: selectedAppliances,
+				groups: groups,
+				simDuration: 21*24*60
+			});
+			var out;
+			data = sim.start()
+		</script>
+		<script type="text/javascript" src = "createGraph.js"></script>
+	</body>
+</html>
