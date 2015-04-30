@@ -1,4 +1,4 @@
-function createGraph(){
+function createGraph(data){
 // Set the dimensions of the canvas / graph
 			var margin = {top: 20, right: 20, bottom: 40, left: 40},
 				width = $("#energy-graph-container").width() - margin.left - margin.right,
@@ -139,9 +139,12 @@ function createGraph(){
       		for(var i in eventsHierarchy){
       			var weekContainer = $("<div>", {class: "week-container"});
       			weekContainer.append($("<h3>", {text: i}));
-				
-				weekContainer.append($("<h4>", {text: "Total energy: " + sim.weeklyEnergyArray[t].toFixed(3) + " kilowatts "+ " Cost: $" + (sim.weeklyEnergyArray[t]*.12).toFixed(2)}));
-				//weekContainer.append($("<h4>", {text: "Cost of energy this week: $" + sim.weeklyEnergyArray[t]*.12}));
+				if(sim.weeklyEnergyArray.length != 0){
+					weekContainer.append($("<h4>", {text: "Total energy: " + sim.weeklyEnergyArray[t].toFixed(3) + " kilowatts "+ " Cost: $" + (sim.weeklyEnergyArray[t]*.12).toFixed(2)}));
+				}//weekContainer.append($("<h4>", {text: "Cost of energy this week: $" + sim.weeklyEnergyArray[t]*.12}));
+				else{
+					weekContainer.append($("<h4>", {text: "Total energy: " + sim.energyWeek.toFixed(3) + " kilowatts "+ " Cost: $" + (sim.energyWeek*.12).toFixed(2)}));
+				}
 				t++;
       			for(var j in  eventsHierarchy[i]){
       				var dayContainer = $("<ul>", {class: "day-container"});
